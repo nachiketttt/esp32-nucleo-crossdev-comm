@@ -1,0 +1,8 @@
+Command: ninja flash
+CMake Error at run_serial_tool.cmake:67 (message):
+  
+  /home/nachiket/.espressif/tools/python/2c211b2/venv/bin/python;;/home/nachiket/esp/esp-idf/components/esptool_py/esptool/esptool.py;--chip;esp32
+  failed.
+
+
+

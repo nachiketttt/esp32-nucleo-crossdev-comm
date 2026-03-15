@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/home/nachiket/workspace/001_SPI_SLAVE_RX/build/CMakeFiles/bootloader
+/home/nachiket/workspace/001_SPI_SLAVE_RX/build/CMakeFiles/bootloader.rule
+/home/nachiket/workspace/001_SPI_SLAVE_RX/build/CMakeFiles/bootloader-complete.rule
+/home/nachiket/workspace/001_SPI_SLAVE_RX/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/home/nachiket/workspace/001_SPI_SLAVE_RX/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/nachiket/workspace/001_SPI_SLAVE_RX/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/nachiket/workspace/001_SPI_SLAVE_RX/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/nachiket/workspace/001_SPI_SLAVE_RX/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/nachiket/workspace/001_SPI_SLAVE_RX/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/nachiket/workspace/001_SPI_SLAVE_RX/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

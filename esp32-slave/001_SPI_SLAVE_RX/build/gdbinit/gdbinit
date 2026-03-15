@@ -1,0 +1,2 @@
+source /home/nachiket/workspace/001_SPI_SLAVE_RX/build/gdbinit/symbols
+source /home/nachiket/workspace/001_SPI_SLAVE_RX/build/gdbinit/connect
