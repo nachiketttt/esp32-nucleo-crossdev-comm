@@ -1,54 +1,40 @@
-# STM32 ↔ ESP32 SPI Cross-Device Communication
+# ESP32 × Nucleo Cross-Device Communication
 
-Bare-metal STM32F446RE SPI master communicating with ESP32 WROOM 
-SPI slave over 3 wires at 2MHz. Implemented without HAL using 
-custom register-level SPI driver on the STM32 side and ESP-IDF 
-SPI slave driver on the ESP32 side.
+Implementation of embedded communication protocols between STM32F446RE and ESP32-WROOM-32.
+- STM32 side uses custom bare-metal HAL drivers for SPI, USART, I2C and GPIO
+- ESP32 side uses ESP-IDF's hardware abstraction layer
 
-## Hardware
-- STM32 Nucleo F446RE (SPI master)
-- ESP32 WROOM NodeMCU (SPI slave)
-- Logic analyzer (Saleae) for signal verification
+## Hardware & Stack
 
-## Wiring
+| | |
+|---|---|
+| **STM32 Board** | STM32F446RE (Nucleo-64) |
+| **ESP32 Module** | ESP32-WROOM-32 |
+| **IDE (STM32)** | STM32CubeIDE on Fedora Linux |
+| **IDE (ESP32)** | ESP-IDF on Fedora Linux |
+| **CAN Transceiver** | TJA1050 |
+| **Debug** | PulseView with Logic Analyser, Moserial |
 
-| Signal | STM32 Pin | ESP32 GPIO |
-|--------|-----------|------------|
-| MOSI   | PA7       | GPIO12     |
-| SCLK   | PA5       | GPIO15     |
-| CS     | PA4       | GPIO14     |
-| GND    | GND       | GND        |
+## Driver Implementation
 
-## SPI Configuration
+| Driver | STM32 | ESP32 |
+|--------|-------|-------|
+| SPI | Custom bare-metal HAL | ESP-IDF HAL |
+| USART | Custom bare-metal HAL | ESP-IDF HAL |
+| I2C | Custom bare-metal HAL | ESP-IDF HAL |
+| CAN | STM32 HAL | ESP-IDF TWAI |
+| GPIO | Custom bare-metal HAL | ESP-IDF HAL |
 
-| Parameter    | Value              |
-|--------------|--------------------|
-| Mode         | 0 (CPOL=0, CPHA=0) |
-| Data Frame   | 8-bit              |
-| Bit Order    | MSB First          |
-| Clock Speed  | 2MHz               |
-| NSS          | Software (SSM=1)   |
+## Protocols
 
-## Tests Completed
-- [x] Simplex TX — STM32 sends Hello World, ESP32 receives and prints
-- [ ] Simplex RX — ESP32 sends, STM32 receives
-- [ ] Full Duplex — simultaneous bidirectional exchange
+| # | Protocol | Role (STM32 / ESP32) | Status |
+|---|----------|----------------------|--------|
+| 001 | SPI | Master / Slave | 🚧 In Progress |
+| 002 | USART | TX-RX / TX-RX | ⏳ Planned |
+| 003 | I2C | Master / Slave | ⏳ Planned |
+| 004 | CAN (TWAI) | Node / Node | ⏳ Planned |
 
 ## Structure
-- `stm32-master/` — bare-metal STM32 SPI driver and master TX code
-- `esp32-slave/`  — ESP-IDF SPI slave receiver
 
-## A Problem I Solved
-ESP32 received garbage data for over an hour. Logic analyzer 
-confirmed STM32 was transmitting Hello World correctly 
-(48 65 6C 6C 6F 20 57 6F 72 6C 64). Fault isolated to an 
-unconnected MOSI wire. Physical connection fixed, clean 
-reception confirmed immediately.
-
-## Verification
-
-### Logic Analyzer — MOSI Signal (PulseView)
-![Logic Analyzer Capture](images/001_pulseview.png)
-
-### ESP32 Serial Monitor Output
-![ESP32 Serial Output](images/001_esp32_output.png)
+Each protocol is contained in its own folder with a dedicated README covering
+pin configuration, wiring, implementation details and logic analyser output.
