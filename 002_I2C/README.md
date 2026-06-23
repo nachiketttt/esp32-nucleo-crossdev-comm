@@ -42,7 +42,7 @@ only one device needs to supply them).
 
 ### Espressif-IDE
 - Nucleo as slave sending data to esp32
-![espide](../images/002_it_stm32.png)
+![espide](../images/002_stm32_slave_esp.png)
 
 - ESP32 as slave sending data to Nucleo
 ![espide](../images/002_it_esp.png)
