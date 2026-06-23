@@ -1,5 +1,4 @@
 # ESP32 × Nucleo Cross-Device Communication
-
 Implementation of embedded communication protocols between STM32F446RE and ESP32-WROOM-32.
 - STM32 side uses custom bare-metal HAL drivers for SPI, USART, I2C and GPIO
 - ESP32 side uses ESP-IDF's hardware abstraction layer
@@ -35,6 +34,6 @@ Implementation of embedded communication protocols between STM32F446RE and ESP32
 | 004 | CAN (TWAI) | Node / Node | ⏳ Planned |
 
 ## Structure
-
 Each protocol is contained in its own folder with a dedicated README covering
 pin configuration, wiring, implementation details and logic analyser output.
+
