@@ -52,7 +52,7 @@ only one device needs to supply them).
 ![pulse](../images/002_it_pulse.png)
 
 - Data being read by ESP32 from nucleo slave
-![pulse](../images/002_it_pulse.png)
+![pulse](../images/002_stm32_slave_pulse.png)
 
 ## Known issues & how they were (or weren't) solved
 
