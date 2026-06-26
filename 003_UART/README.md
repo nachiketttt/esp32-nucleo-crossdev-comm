@@ -1,6 +1,6 @@
 # UART/USART Cross-Platform Communication between STM32 Nucleo-F446RE ↔ ESP32
 
-Simple UART echo program that sends the same data sent back to the sender deployed between a bare-metal STM32 USART1 driver and an
+Simple UART echo program that sends the same data back to the sender deployed between a bare-metal STM32 USART1 driver and an
 ESP-IDF UART2 driver on the ESP32, tested with both polling and
 interrupt-driven (IT) APIs on the STM32 side
 
