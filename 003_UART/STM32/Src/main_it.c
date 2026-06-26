@@ -1,0 +1,122 @@
+/*
+ * main_it.c
+ *
+ *  Created on: Jun 26, 2026
+ *      Author: nachiket
+ */
+
+// USART1_TX ====> PA9
+// USART1_RX ====> PA10
+
+#include "main.h"
+
+USART_Handle_t USART1_Handle;
+char msg[1024] = "USART TX testing from nucleo\n\r";
+
+int main(void)
+{
+	//Gpio config for usart
+	USART1_GPIOInits();
+
+	//usart peripheral config and initialisation
+	USART1_Inits();
+
+	//enabling usart1 interrupts
+	USART_IRQInterruptConfig(IRQ_NO_USART1, ENABLE);
+
+	//enabling the usart peripheral
+	USART_PeripheralControl(USART1, ENABLE);
+
+	//button pin config
+	GPIO_ButtonInit();
+
+	uint8_t rcv_buf[1024];
+	while(1)
+	{
+		//wait till button is pressed
+		while(GPIO_ReadFromInputPin(GPIOC, GPIO_PIN_NO_13));
+		delay(); //delay to avoid button de bouncing issues
+
+		uint32_t len=strlen(msg);
+
+		while(USART_SendDataIT(&USART1_Handle, (uint8_t*)msg, len) != USART_READY);
+
+		delay();
+
+		while(USART_ReceiveDataIT(&USART1_Handle, rcv_buf, len) != USART_READY);
+		rcv_buf[len] = '\0';
+		printf("Data received from esp32: %s",rcv_buf);
+	}
+}
+
+/* Peripheral and GPIO configurations */
+void USART1_GPIOInits(void)
+{
+	GPIO_Handle_t USARTPins;
+
+	USARTPins.pGPIOx=GPIOA;
+	USARTPins.GPIO_PinConfig.GPIO_PinMode=GPIO_MODE_ALTFN;
+	USARTPins.GPIO_PinConfig.GPIO_PinOPType=GPIO_OP_TYPE_PP;
+	USARTPins.GPIO_PinConfig.GPIO_PinPuPdControl=GPIO_PIN_PU;
+	USARTPins.GPIO_PinConfig.GPIO_PinAltFunMode=7;
+	USARTPins.GPIO_PinConfig.GPIO_PinSpeed=GPIO_SPEED_FAST;
+
+	//USART1_TX
+	USARTPins.GPIO_PinConfig.GPIO_PinNumber=GPIO_PIN_NO_9;
+	GPIO_Init(&USARTPins);
+
+	//USART1_RX
+	USARTPins.GPIO_PinConfig.GPIO_PinNumber=GPIO_PIN_NO_10;
+	GPIO_Init(&USARTPins);
+}
+
+void USART1_Inits(void)
+{
+	USART1_Handle.pUSARTx=USART1;
+	USART1_Handle.USART_Config.USART_Baud=USART_STD_BAUD_115200;
+	USART1_Handle.USART_Config.USART_HWFlowControl=USART_HW_FLOW_CTRL_NONE;
+	USART1_Handle.USART_Config.USART_Mode=USART_MODE_TXRX;
+	USART1_Handle.USART_Config.USART_NoOfStopBits=USART_STOPBITS_1;
+	USART1_Handle.USART_Config.USART_ParityControl=USART_PARITY_DISABLE;
+	USART1_Handle.USART_Config.USART_WordLength=USART_WORDLEN_8BITS;
+
+	USART_Init(&USART1_Handle);
+}
+
+void GPIO_ButtonInit(void)
+{
+	GPIO_Handle_t GPIOBtn;
+
+	//this is btn gpio configuration
+	GPIOBtn.pGPIOx = GPIOC;
+	GPIOBtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
+	GPIOBtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
+	GPIOBtn.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	GPIOBtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIO_Init(&GPIOBtn);
+}
+
+void delay(void)
+{
+	for(uint32_t i=0;i<500000/2;i++);
+}
+
+/* ISR codes */
+void USART1_IRQHandler(void)
+{
+	USART_IRQHandling(&USART1_Handle);
+}
+
+void USART_ApplicationEventCallback(USART_Handle_t *pUSARTHandle,uint8_t event)
+{
+	if(event == USART_EVENT_TX_CMPLT)
+	{
+		printf("Tx is complete\n");
+	}
+	else if(event == USART_EVENT_RX_CMPLT)
+	{
+		printf("Rx is complete\n");
+	}
+}
+
