@@ -28,9 +28,9 @@ Implementation of embedded communication protocols between STM32F446RE and ESP32
 
 | # | Protocol | Role (STM32 / ESP32) | Status |
 |---|----------|----------------------|--------|
-| 001 | SPI | Master / Slave | 🚧 In Progress |
-| 002 | USART | TX-RX / TX-RX | ⏳ Planned |
-| 003 | I2C | Master / Slave | ⏳ Planned |
+| 001 | SPI | Master / Slave | Completed |
+| 002 | USART | TX-RX / TX-RX | Completed |
+| 003 | I2C | Master / Slave | Completed |
 | 004 | CAN (TWAI) | Node / Node | ⏳ Planned |
 
 ## Structure
