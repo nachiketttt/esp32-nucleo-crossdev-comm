@@ -84,6 +84,7 @@ void SPI_Init(SPI_Handle_t *pSPIHandle)
 {
 	//spi peripheral clk enable
 	SPI_PeriClkCtrl(pSPIHandle->pSPIx,ENABLE);
+
 	//configuring the spi_cr1 register
 	uint32_t tempreg=0;
 
@@ -120,9 +121,6 @@ void SPI_Init(SPI_Handle_t *pSPIHandle)
 
 	//6. config the CPHA
 	tempreg|=pSPIHandle->SPIConfig.SPI_CPHA<<SPI_CR1_CPHA;
-
-	//7. config the SSM bit
-	tempreg|=pSPIHandle->SPIConfig.SPI_SSM<<SPI_CR1_SSM;
 
 	pSPIHandle->pSPIx->CR1=tempreg;
 }

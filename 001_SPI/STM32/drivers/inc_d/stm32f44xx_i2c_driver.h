@@ -128,6 +128,8 @@ uint8_t I2C_SlaveReceiveData(I2C_RegDef_t *pI2C);
 
 void I2C_CloseReceiveData(I2C_Handle_t *pI2CHandle);
 void I2C_CloseSendData(I2C_Handle_t *pI2CHandle);
+
+void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
 /*
  *IRQ config and ISR handling
  */

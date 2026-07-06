@@ -320,7 +320,7 @@ void USART_SendData(USART_Handle_t *pUSARTHandle, uint8_t *pTxBuffer, uint32_t L
  *
  * @param[in]         - base addr
  * @param[in]         - rx buffer addr
- * @param[in]         - length of data being sent
+ * @param[in]         - length of data being received
  *
  * @return            -
  *
@@ -332,7 +332,7 @@ void USART_ReceiveData(USART_Handle_t *pUSARTHandle, uint8_t *pRxBuffer, uint32_
 	for(uint32_t i=0;i<Len;i++)
 	{
 		//Implement the code to wait until RXNE flag is set in the SR
-		while(!USART_GetFlagStatus(pUSARTHandle->pUSARTx,USART_SR_RXNE))
+		while(!(USART_GetFlagStatus(pUSARTHandle->pUSARTx,USART_FLAG_RXNE)));
 
 		//Check the USART_WordLength to decide whether we are going to receive 9bit of data in a frame or 8 bit
 		if(pUSARTHandle->USART_Config.USART_WordLength == USART_WORDLEN_9BITS)
@@ -367,7 +367,7 @@ void USART_ReceiveData(USART_Handle_t *pUSARTHandle, uint8_t *pRxBuffer, uint32_
 				//No parity is used , so all 8bits will be of user data
 
 				//read 8 bits from DR
-				*pRxBuffer=pUSARTHandle->pUSARTx->DR;
+				*pRxBuffer=(uint8_t)(pUSARTHandle->pUSARTx->DR & (uint8_t)0xFF);
 			}
 			else
 			{

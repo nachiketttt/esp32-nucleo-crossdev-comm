@@ -1,3 +1,0 @@
-CompileFlags:
-  CompilationDatabase: /home/nachiket/workspace/001_SPI_SLAVE_RX/build
-  Remove: [-m*, -f*]
